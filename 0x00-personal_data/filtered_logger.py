@@ -16,3 +16,30 @@ def filter_datum(fields: List[str], redaction: str, message: str,
                    redaction, _)if _.split('=')[0] in fields else _ for _ in
                    message.split(separator)]
     return separator.join(new_message)
+
+
+fields = ["name", "date_of_birth"]
+messages = ["name=egg;email=eggmin@eggsample.com;password=eggcellent;date_of_birth=12/12/1986;",
+            "name=bob;email=bob@dylan.com;password=bobbycool;date_of_birth=03/04/1993;"]
+
+for message in messages:
+    print(filter_datum(fields, 'xxx', message, ';'))
+
+
+class RedactingFormatter(logging.Formatter):
+    """ Redacting Formatter class
+        """
+
+    REDACTION = "***"
+    FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
+    SEPARATOR = ";"
+
+    def __init__(self, fields: List[str]):
+        super(RedactingFormatter, self).__init__(self.FORMAT)
+        self.fields = fields
+
+    def format(self, record: logging.LogRecord) -> str:
+        '''formats a LogRecord
+        '''
+        msg = super(RedactingFormatter, self).format(record)
+        return filter_datum(self.fields, '***', msg, ';')
