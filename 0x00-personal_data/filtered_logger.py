@@ -18,14 +18,6 @@ def filter_datum(fields: List[str], redaction: str, message: str,
     return separator.join(new_message)
 
 
-fields = ["name", "date_of_birth"]
-messages = ["name=egg;email=eggmin@eggsample.com;password=eggcellent;date_of_birth=12/12/1986;",
-            "name=bob;email=bob@dylan.com;password=bobbycool;date_of_birth=03/04/1993;"]
-
-for message in messages:
-    print(filter_datum(fields, 'xxx', message, ';'))
-
-
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class
         """
@@ -35,6 +27,7 @@ class RedactingFormatter(logging.Formatter):
     SEPARATOR = ";"
 
     def __init__(self, fields: List[str]):
+        '''Initialize'''
         super(RedactingFormatter, self).__init__(self.FORMAT)
         self.fields = fields
 
