@@ -9,19 +9,20 @@ from typing import List, Union
 import re
 
 
-def filter_datum(fields: List[str], redaction: str, message: str, separator: str):
+def filter_datum(fields: List[str], redaction: str, message: str,
+                 separator: str):
     '''
         Args:
-            - fields: a list of strings representing all fields to obfuscate
-            - redaction: a string representing by what the field will be obfuscated
+            - fields: a list of strings representing all fields to
+            obfuscate
+            - redaction: a string representing by what the field will be
+            obfuscated
             - message: a string representing the log line
-            - seperator: a string representing by which character is separating
+            - seperator: a string representing by which character is
+            separating
             all fields in the log line (message)
     '''
-    new_message = []
-    for _ in message.split(separator):
-        if _.split('=')[0] in fields:
-            new_message.append(
-                re.sub(_[re.search(_.split('=')[0], _).span()[1] + 1:], redaction, _))
-        else: new_message.append(_)
+    new_message = [re.sub(_[re.search(_.split('=')[0], _).span()[1] + 1:],
+                   redaction, _)if _.split('=')[0] in fields else _ for _ in
+                   message.split(separator)]
     return separator.join(new_message)
