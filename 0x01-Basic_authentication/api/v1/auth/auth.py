@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" Module of Index views
+""" Authentication module for the API.
 """
 
 
@@ -32,10 +32,10 @@ class Auth:
         return None
 
     def current_user(self, request=None) -> TypeVar('User'):
-        """"
+        """
             Args:
                 Request
             Return:
                 None
-        """"
+        """
         return None
