@@ -2,6 +2,7 @@
 """ Module of Index views
 """
 from flask import request
+from typing import List, TypeVar
 
 
 class Auth:
