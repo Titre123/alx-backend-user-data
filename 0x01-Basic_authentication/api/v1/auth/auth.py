@@ -20,7 +20,12 @@ class Auth:
             Return:
                 False -> Bool
         """
-        return False
+        if path is None or excluded_paths is None:
+            return True
+        if path in excluded_paths or path + '/' in excluded_paths:
+            return False
+        else:
+            return True
 
     def authorization_header(self, request=None) -> str:
         """
