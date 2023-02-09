@@ -25,7 +25,6 @@ class BasicAuth(Auth):
     """
         Basic Autnentification class
     """
-    pass
 
     def extract_base64_authorization_header(self,
                                             authorization_header: str) -> str:
