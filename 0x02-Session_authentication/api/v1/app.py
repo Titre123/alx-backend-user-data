@@ -36,9 +36,8 @@ def bef_req():
                          '/api/v1/forbidden/', "/api/v1/status"]):
         if auth.authorization_header(request) is None:
             abort(401)
-        cook = auth.session_cookie(request)
-        if auth.authorization_header(request) is None and cook is None:
-            abort(401)
+        if auth.current_user(request) is None:
+            abort(403)
     request.current_user = auth.current_user(request)
 
 
