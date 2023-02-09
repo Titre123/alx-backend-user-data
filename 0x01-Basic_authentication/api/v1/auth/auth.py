@@ -20,6 +20,9 @@ class Auth:
             Return:
                 False -> Bool
         """
+        for pat in excluded_paths:
+            if pat[len(pat)-1:] == '*' and pat[:len(pat)-1] in path:
+                return False
         if path is None or excluded_paths is None:
             return True
         if path in excluded_paths or path + '/' in excluded_paths:
