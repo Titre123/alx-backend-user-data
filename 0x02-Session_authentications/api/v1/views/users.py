@@ -2,7 +2,7 @@
 """ Module of Users views
 """
 from api.v1.views import app_views
-from flask import abort, jsonify, request
+from flask import abort, jsonify, request, redirect
 from models.user import User
 
 
@@ -27,9 +27,15 @@ def view_one_user(user_id: str = None) -> str:
     """
     if user_id is None:
         abort(404)
+    if user_id is 'me' and request.current_user is None:
+        abort(404)
+    if user_id == 'me':
+        user_id = request.current_user.id
     user = User.get(user_id)
     if user is None:
         abort(404)
+    if user_id is 'me' and request.current_user is not None:
+        return jsonify(user.to_json()), 200
     return jsonify(user.to_json())
 
 
@@ -102,7 +108,7 @@ def update_user(user_id: str = None) -> str:
       - 404 if the User ID doesn't exist
       - 400 if can't update the User
     """
-    if user_id is None:
+    if user_id is me:
         abort(404)
     user = User.get(user_id)
     if user is None:
