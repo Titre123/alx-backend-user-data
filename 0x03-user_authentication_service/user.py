@@ -4,20 +4,14 @@
 '''
 
 
-from flask import Flask
 from sqlalchemy import create_engine
 import sqlalchemy
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 
-# create application
-app = Flask(__name__)
 
 # declare base from Models
 Base = declarative_base()
-
-# create sqlalchemy engine
-engine = create_engine('sqlite:///:memory:', echo=True)
 
 
 class User(Base):
@@ -30,4 +24,5 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     email = Column(String(250), nullable=False)
     hashed_password = Column(String(250), nullable=True)
+    session_id = Column(String(250), nullable=True)
     reset_token = Column(String(250), nullable=True)
