@@ -38,10 +38,14 @@ class DB:
         '''
             Add new user to the database
         '''
-        self.__session = self._session
-        new_user = User(email=email, hashed_password=hashed_password)
-        self.__session.add(new_user)
-        self.__session.commit()
+        try:
+            self.__session = self._session
+            new_user = User(email=email, hashed_password=hashed_password)
+            self.__session.add(new_user)
+            self.__session.commit()
+        except Exception:
+            self._session.rollback()
+            new_user = None
         return new_user
 
     def find_user_by(self, **kwargs) -> TypeVar('User'):
