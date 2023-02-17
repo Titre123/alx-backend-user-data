@@ -60,15 +60,16 @@ class DB:
         except AttributeError:
             raise InvalidRequestError
 
-    def update_user(self, user_id: str, **kwargs) -> None:
+    def update_user(self, user_id: int, **kwargs) -> None:
         '''
             Update the user that is has the user_id
         '''
         try:
             user = self.find_user_by(id=user_id)
             key = list(kwargs.keys())[0]
-            if user.__getattr__(key):
-                user.__setattr__(key, kwargs[key])
+            print(getattr(user, key))
+            if getattr(user, key):
+                setattr(user, key, kwargs[key])
                 self.__session.commit()
         except AttributeError:
             raise ValueError
