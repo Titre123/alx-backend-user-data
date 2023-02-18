@@ -19,11 +19,11 @@ def _hash_password(password: str) -> bytes:
     return bcrypt.hashpw(bytes, salt)
 
 
-def _generate_uuid(self) -> str:
-        '''
-            generate uuid for session id
-        '''
-        return str(uuid4())
+def _generate_uuid() -> str:
+    '''
+        generate uuid for session id
+    '''
+    return str(uuid4())
 
 
 class Auth:
@@ -56,7 +56,6 @@ class Auth:
                 return False
         except (AttributeError, InvalidRequestError):
             return False
-
 
     def create_session(self, email: str) -> str:
         '''
