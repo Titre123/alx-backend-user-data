@@ -67,7 +67,6 @@ class DB:
         try:
             user = self.find_user_by(id=user_id)
             key = list(kwargs.keys())[0]
-            print(getattr(user, key))
             if getattr(user, key):
                 setattr(user, key, kwargs[key])
                 self.__session.commit()
