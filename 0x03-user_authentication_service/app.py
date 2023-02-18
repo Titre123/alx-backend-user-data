@@ -12,7 +12,7 @@ from os import getenv
 app = Flask(__name__)
 
 # instantiate Auth
-auth = Auth()
+AUTH = Auth()
 
 
 # home route
@@ -32,7 +32,7 @@ def users():
         email = str(request.form.get('email'))
         password = str(request.form.get('password'))
         try:
-            auth.register_user(email, password)
+            AUTH.register_user(email, password)
             return jsonify({"email": email, "message": "user created"}), 200
         except ValueError:
             return jsonify({"message": "email already registered"}), 200
@@ -46,9 +46,9 @@ def login():
     if request.method == 'POST':
         email = str(request.form.get('email'))
         password = str(request.form.get('password'))
-        valid = auth.valid_login(email, password)
+        valid = AUTH.valid_login(email, password)
         if valid:
-            session_id = auth.create_session(email)
+            session_id = AUTH.create_session(email)
             resp = make_response()
             resp.set_cookie('session_id', session_id)
             return jsonify({"email": email, "message": "logged in"}), 200
@@ -63,8 +63,8 @@ def logout():
     '''
     if request.method == 'DELETE':
         cook = request.cookies.get('session_id')
-        user = auth.get_user_from_session_id(cook)
-        auth.destroy_session(user.id)
+        user = AUTH.get_user_from_session_id(cook)
+        AUTH.destroy_session(user.id)
 
 
 if __name__ == "__main__":
