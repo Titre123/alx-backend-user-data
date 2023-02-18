@@ -70,5 +70,8 @@ class DB:
             if getattr(user, key):
                 setattr(user, key, kwargs[key])
                 self.__session.commit()
+            if key == 'session_id' or key == 'reset_token':
+                setattr(user, key, kwargs[key])
+                self.__session.commit()
         except AttributeError:
             raise ValueError
