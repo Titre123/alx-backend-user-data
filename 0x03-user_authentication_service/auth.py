@@ -84,3 +84,4 @@ class Auth:
             destroy a session
         '''
         self._db.update_user(user_id, session_id=None)
+        return None
