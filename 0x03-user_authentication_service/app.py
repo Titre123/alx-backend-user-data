@@ -3,7 +3,7 @@
 """
 
 
-from flask import Flask, jsonify, request, make_response, abort
+from flask import Flask, jsonify, request, abort
 from auth import Auth
 from os import getenv
 
@@ -49,9 +49,9 @@ def login():
         valid = AUTH.valid_login(email, password)
         if valid:
             session_id = AUTH.create_session(email)
-            resp = make_response()
+            resp = jsonify({"email": email, "message": "logged in"})
             resp.set_cookie('session_id', session_id)
-            return jsonify({"email": email, "message": "logged in"}), 200
+            return resp
         else:
             abort(401)
 
