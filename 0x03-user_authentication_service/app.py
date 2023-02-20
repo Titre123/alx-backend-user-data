@@ -3,7 +3,7 @@
 """
 
 
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, redirect
 from auth import Auth
 from os import getenv
 

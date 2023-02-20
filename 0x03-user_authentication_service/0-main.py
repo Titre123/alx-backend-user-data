@@ -17,4 +17,7 @@ sess = auth.create_session(email)
 print(sess)
 print(auth.create_session("unknown@email.com"))
 
-print(auth.get_user_from_session_id(sess).session_id)
+user = auth.get_user_from_session_id(sess)
+print(user.session_id + ' ' + str(user.id))
+auth.destroy_session(user.id)
+print(user.session_id)
