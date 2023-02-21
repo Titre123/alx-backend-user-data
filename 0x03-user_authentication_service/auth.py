@@ -85,3 +85,25 @@ class Auth:
         '''
         self._db.update_user(user_id, session_id=None)
         return None
+
+    def get_reset_password_token(self, email: str) -> str:
+        '''
+        '''
+        try:
+            user = self._db.find_user_by(email=email)
+            token = uuid.uuid4()
+            self._db.update_user(reset_token=token)
+            return token
+        except (AttributeError, InvalidRequestError, NoResultFound):
+            raise ValueError
+
+    def update_password(self, reset_token: str, password: str) -> None:
+        '''
+        '''
+        try:
+            user = self._db.find_user_by(reset_token=reset_token)
+            hashed_password = _hash_password(password)
+            self._db.update_user(hashed_password=hashed_password)
+            self.__db.update_password(reset_token=None)
+        except (AttributeError, InvalidRequestError, NoResultFound):
+            raise ValueError
